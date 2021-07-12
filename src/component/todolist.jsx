@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { flexbox } from '@material-ui/system';
+import { nanoid } from 'nanoid';
 import Box from '@material-ui/core/Box';
 
 const priorities={
@@ -7,26 +7,36 @@ const priorities={
     NORMAL: "normal",
     URGENTE:"urgent"
 }
-let tache={
-    name:"",
-    desc:"",
-    priority:""
-}
 let taches=[
     {
+        id:nanoid(),
+        name:'test',
+        desc:'Ceci est un test',
+        priority:priorities.BASSE
+    },
+    {
+        id:nanoid(),
+        name:'test',
+        desc:'Ceci est un test',
+        priority:priorities.BASSE
+    },
+    {
+        id:nanoid(),
         name:'test',
         desc:'Ceci est un test',
         priority:priorities.BASSE
     }
 ]
 const Tache =()=> {
+    const [list, setlist] = useState(taches)
     const [name, setname] = useState("");
     const [desc, setdesc] = useState("");
     const [priority,setpriority] = useState("");
-    const listJSX = taches.map(
-        p=> <Box display='flex'flexDirection='row'style={{margin:'10%',border:"1px solid black"}}>
+    const listJSX = list.map(
+        p=> <Box display='flex'flexDirection='row'justifyContent="space-between" style={{marginLeft:'10%',marginRight:'10%',border:"1px solid black"}}>
             <Box display='flex' flexDirection='column'style={{minWidth:'80%'}} >
-            <p style={{maxHeight:'5%'}}>{p.name}<p style={p.priority===priorities.URGENTE?{hidden:"false", textColor:"red"}:{}} hidden = "true">({p.priority})</p></p>
+            <p style={{maxHeight:'5%'}}>{p.name}</p>
+            <p style={p.priority===priorities.URGENTE?{hidden:"false", textColor:"red"}:{}} hidden = {true}>({p.priority})</p>
             <p style={{minHeight:'80%'}}>{p.desc}</p>
             </Box>
             <Box display='flex' flexDirection='column' flexWrap='wrap'flexGrow={1} style={{display:'flex', FlexDirection:'row',maxWidth:'20%', minHeight:'100%'}}>
@@ -35,18 +45,17 @@ const Tache =()=> {
             </Box>
         </Box>
     )
+    const deleteTache = () =>{
+        
+    }
     const handleTache = ()=>{
-        const newTache = Object.create(tache)
-        newTache.name={name}
-        newTache.desc = {desc}
-        newTache.priority = {priority}
-        taches.push(newTache)
-        console.log("monObjet ", newTache)
-        console.log("ma Liste ",taches)
+        const newList = list.concat({id:nanoid(), name,desc,priority})
+        setlist(newList)
+        console.log("ma Liste ",list)
     }
   return (
     <>
-        <form style={{marginLeft:'10%',marginRight:'10%',display:"flex", flexDirection:'column', flexWrap:'wrap', justifyContent:'space-between'}} onSubmit={handleTache}>
+        <Box display ='flex' flexDirection = "column" style={{marginLeft:'10%',marginRight:'10%'}}>
             <input placeholder='Nom de la tache'type="text" required = {true} value = {name} onChange={e=>setname(e.target.value)}></input>
             <textarea placeholder='Description de la tache' rows={4} value ={desc} required = {true} onChange={e=>setdesc(e.target.value)}/>
             <select onChange={e=>setpriority(e.target.value)}>
@@ -56,9 +65,9 @@ const Tache =()=> {
             
             </select>
         
-            <input type="submit" value = 'Ajouter'/>
+            <button onClick={handleTache}>Ajouter</button>
         
-        </form>
+        </Box>
         <div >
             {listJSX}
         </div>
