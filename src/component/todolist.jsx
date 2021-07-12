@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { nanoid } from 'nanoid';
 import Box from '@material-ui/core/Box';
 
@@ -28,7 +28,25 @@ let taches=[
     }
 ]
 const Tache =()=> {
-    const [list, setlist] = useState(taches)
+    
+    const deleteTache = (e) =>{
+        let index =list.indexOf(e.target.value)
+        list.splice(index,1)
+        setlist(list)
+    }
+    const handleTache = ()=>{
+        const newList = list.concat({id:nanoid(), name,desc,priority})
+        setlist(newList)
+        console.log("ma Liste ",list)
+    }
+    const [list, setlist] = useState(taches);
+    useEffect(() => {
+        const handle ={handleTache}
+        const deleteT={deleteTache}
+        return () => {
+            
+        }
+    }, [list])
     const [name, setname] = useState("");
     const [desc, setdesc] = useState("");
     const [priority,setpriority] = useState("");
@@ -41,18 +59,12 @@ const Tache =()=> {
             </Box>
             <Box display='flex' flexDirection='column' flexWrap='wrap'flexGrow={1} style={{display:'flex', FlexDirection:'row',maxWidth:'20%', minHeight:'100%'}}>
             <button style={{minHeight:'50%'}}>Terminer</button>
-            <button style={{minHeight:'50%'}}>Supprimer</button>
+            <button onClick={deleteTache}style={{minHeight:'50%'}}>Supprimer</button>
             </Box>
         </Box>
     )
-    const deleteTache = () =>{
-        
-    }
-    const handleTache = ()=>{
-        const newList = list.concat({id:nanoid(), name,desc,priority})
-        setlist(newList)
-        console.log("ma Liste ",list)
-    }
+    
+    
   return (
     <>
         <Box display ='flex' flexDirection = "column" style={{marginLeft:'10%',marginRight:'10%'}}>
