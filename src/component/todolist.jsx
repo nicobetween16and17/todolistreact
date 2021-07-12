@@ -34,9 +34,9 @@ const Tache =()=> {
     }
   return (
     <>
-        <form onSubmit={handleTache}>
-            <input type="text" required = {true} value = {name} onChange={e=>setname(e.target.value)}></input>
-            <input type="textarea" rows={8} cols={5}value ={desc} required = {true} onChange={e=>setdesc(e.target.value)}></input>
+        <form style={{marginLeft:'10%',marginRight:'10%',display:"flex", flexDirection:'column', flexWrap:'wrap', justifyContent:'space-between'}} onSubmit={handleTache}>
+            <input placeholder='Nom de la tache'type="text" required = {true} value = {name} onChange={e=>setname(e.target.value)}></input>
+            <textarea placeholder='Description de la tache' rows={4} value ={desc} required = {true} onChange={e=>setdesc(e.target.value)}/>
             <select onChange={e=>setpriority(e.target.value)}>
                 <option value = {priorities.BASSE}>basse</option>
                 <option value = {priorities.NORMAL}>Normal</option>
