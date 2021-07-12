@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { flexbox } from '@material-ui/system';
+import Box from '@material-ui/core/Box';
 
 const priorities={
     BASSE: "basse",
@@ -10,24 +12,34 @@ let tache={
     desc:"",
     priority:""
 }
-let taches=[]
+let taches=[
+    {
+        name:'test',
+        desc:'Ceci est un test',
+        priority:priorities.BASSE
+    }
+]
 const Tache =()=> {
     const [name, setname] = useState("");
     const [desc, setdesc] = useState("");
     const [priority,setpriority] = useState("");
     const listJSX = taches.map(
-        p=> <div style={{border:"1px solid black"}}>
-            <p >{p.name}<p style={p.priority===priorities.URGENTE?{hidden:"false", textColor:"red"}:{}} hidden = "true">({p.priority})</p></p>
-            <p>{p.desc}</p>
-            <button>Terminer</button>
-            <button>Supprimer</button>
-        </div>
+        p=> <Box display='flex'flexDirection='row'style={{margin:'10%',border:"1px solid black"}}>
+            <Box display='flex' flexDirection='column'style={{minWidth:'80%'}} >
+            <p style={{maxHeight:'5%'}}>{p.name}<p style={p.priority===priorities.URGENTE?{hidden:"false", textColor:"red"}:{}} hidden = "true">({p.priority})</p></p>
+            <p style={{minHeight:'80%'}}>{p.desc}</p>
+            </Box>
+            <Box display='flex' flexDirection='column' flexWrap='wrap'flexGrow={1} style={{display:'flex', FlexDirection:'row',maxWidth:'20%', minHeight:'100%'}}>
+            <button style={{minHeight:'50%'}}>Terminer</button>
+            <button style={{minHeight:'50%'}}>Supprimer</button>
+            </Box>
+        </Box>
     )
     const handleTache = ()=>{
         const newTache = Object.create(tache)
-        newTache.name=name
-        newTache.desc = desc
-        newTache.priority = priority
+        newTache.name={name}
+        newTache.desc = {desc}
+        newTache.priority = {priority}
         taches.push(newTache)
         console.log("monObjet ", newTache)
         console.log("ma Liste ",taches)
@@ -47,7 +59,7 @@ const Tache =()=> {
             <input type="submit" value = 'Ajouter'/>
         
         </form>
-        <div>
+        <div >
             {listJSX}
         </div>
     </>
